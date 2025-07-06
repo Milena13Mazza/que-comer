@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¿Qué como hoy?</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #fef9f2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+    }
+
+    .selector {
+      margin-bottom: 1rem;
+    }
+
+    button {
+      margin: 0.3rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border: none;
+      background-color: #ffa947;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ff9625;
+    }
+
+    .resultado {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+      margin-top: 1rem;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .comida {
+      font-size: 1.2rem;
+      margin: 1rem 0;
+    }
+
+    .acciones {
+      display: flex;
+      justify-content: space-around;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>¿Qué como hoy?</h1>
+
+  <div class="selector">
+    <button onclick="generarComida('almuerzo')">Almuerzo</button>
+    <button onclick="generarComida('cena')">Cena</button>
+    <button onclick="generarComida('desayuno')">Desayuno / Merienda</button>
+  </div>
+
+  <div class="resultado" id="resultado">
+    <div class="comida" id="comida"></div>
+    <div class="acciones">
+      <button onclick="cambiarPrincipal()">Cambiar principal</button>
+      <button onclick="cambiarAcomp()">Cambiar acompañamiento</button>
+    </div>
+  </div>
+
+  <script>
+    const comidas = {
+      almuerzo: {
+        principal: [
+          "Milanesas de carne",
+          "Pollo al horno",
+          "Bifes a la plancha",
+          "Tarta de jamón y queso",
+          "Tarta de zapallo y pollo",
+          "Carne picada con tomate",
+          "Hamburguesas caseras",
+          "Pastel de papa",
+          "Pollo salteado"
+        ],
+        acomp: [
+          "con puré de papa",
+          "con arroz blanco",
+          "con zapallo al horno",
+          "con papas al horno",
+          "con arroz y zanahoria",
+          "con batatas al horno"
+        ]
+      },
+      cena: {
+        principal: [
+          "Tarta de carne y queso",
+          "Hamburguesas de carne",
+          "Milanesas de pollo",
+          "Pizza casera",
+          "Bifes con ajo",
+          "Pollo a la plancha"
+        ],
+        acomp: [
+          "con zapallo al horno",
+          "con arroz blanco",
+          "con puré mixto",
+          "con papas al horno",
+          "con batatas al horno"
+        ]
+      },
+      desayuno: {
+        principal: [
+          "Tostadas con manteca",
+          "Tostadas con mermelada",
+          "Pan con queso",
+          "Pan con huevo revuelto",
+          "Mate con bizcochitos",
+          "Café con medialuna"
+        ],
+        acomp: [
+          "+ café",
+          "+ mate",
+          "+ té",
+          "+ café con leche"
+        ]
+      }
+    };
+
+    let tipoActual = '';
+    let principalActual = '';
+    let acompActual = '';
+
+    function generarComida(tipo) {
+      tipoActual = tipo;
+      const principal = randomItem(comidas[tipo].principal);
+      const acomp = randomItem(comidas[tipo].acomp);
+      principalActual = principal;
+      acompActual = acomp;
+      mostrarComida();
+    }
+
+    function cambiarPrincipal() {
+      if (!tipoActual) return;
+      principalActual = randomItem(comidas[tipoActual].principal);
+      mostrarComida();
+    }
+
+    function cambiarAcomp() {
+      if (!tipoActual) return;
+      acompActual = randomItem(comidas[tipoActual].acomp);
+      mostrarComida();
+    }
+
+    function mostrarComida() {
+      const comidaText = `${principalActual} ${acompActual}`;
+      document.getElementById('comida').innerText = comidaText;
+    }
+
+    function randomItem(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+  </script>
+
+</body>
+</html>
